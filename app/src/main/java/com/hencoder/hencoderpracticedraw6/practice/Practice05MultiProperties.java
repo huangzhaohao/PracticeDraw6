@@ -1,5 +1,6 @@
 package com.hencoder.hencoderpracticedraw6.practice;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -9,11 +10,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.hencoder.hencoderpracticedraw6.R;
+import com.hencoder.hencoderpracticedraw6.Utils;
 
 public class Practice05MultiProperties extends ConstraintLayout {
     Button animateBt;
     ImageView imageView;
-
+    private int clickState = 0;
     public Practice05MultiProperties(Context context) {
         super(context);
     }
@@ -39,6 +41,26 @@ public class Practice05MultiProperties extends ConstraintLayout {
             @Override
             public void onClick(View v) {
                 // TODO 在这里处理点击事件，同时对多个属性做动画
+                switch (clickState){
+                    case 0:
+                        ObjectAnimator.ofFloat(imageView,"scaleX",1f).start();
+                        ObjectAnimator.ofFloat(imageView,"scaleY",1f).start();
+                        ObjectAnimator.ofFloat(imageView,"alpha",1f).start();
+                        ObjectAnimator.ofFloat(imageView,"translationX",getWidth()- Utils.dpToPixel(30) - imageView.getWidth()).start();
+                        ObjectAnimator.ofFloat(imageView,"rotation",360f).start();
+                        break;
+                    case 1:
+                        ObjectAnimator.ofFloat(imageView,"scaleX",0f).start();
+                        ObjectAnimator.ofFloat(imageView,"scaleY",0f).start();
+                        ObjectAnimator.ofFloat(imageView,"alpha",0f).start();
+                        ObjectAnimator.ofFloat(imageView,"translationX",0).start();
+                        ObjectAnimator.ofFloat(imageView,"rotation",0f).start();
+                        break;
+                }
+                clickState++;
+                if (clickState == 2){
+                    clickState = 0;
+                }
             }
         });
     }
